@@ -1,2 +1,4 @@
 ﻿/bin/
 /.idea/
+/obj/Release
+/obj/Debug
