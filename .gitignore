@@ -4,3 +4,9 @@
 /obj/Debug/
 /obj/x86/
 /obj/x64/
+obj/x64/Release/net8.0/apphost.exe
+obj/x64/Release/net8.0/lASILLite.AssemblyInfo.cs
+obj/x64/Release/net8.0/lASILLite.AssemblyInfoInputs.cache
+obj/x64/Release/net8.0/lASILLite.dll
+obj/x64/Release/net8.0/ref/lASILLite.dll
+obj/x64/Release/net8.0/refint/lASILLite.dll
