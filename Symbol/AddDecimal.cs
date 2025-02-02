@@ -8,7 +8,7 @@ public class AddDecimal : Symbol
 
     public override string GetCommand() => "ADD_DECIMAL";
         
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         var a = runtime.Stack.Pop();
         var b = runtime.Stack.Pop();

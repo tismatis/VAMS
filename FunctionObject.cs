@@ -36,8 +36,8 @@ public class FunctionObject
         int length = localSymbols.Length;
         MaxStackSize = length;
         sw.Start();
-        for (int address = 0; address != length; address++)
-            localSymbols[address].Execute(runtime, ref address);
+        for (runtime.Address = 0; runtime.Address != length; runtime.Address++)
+            localSymbols[runtime.Address].Execute(runtime);
         sw.Stop();
         Console.WriteLine($"Function {Name} executed in {sw.ElapsedMilliseconds}ms");
     }
@@ -51,7 +51,7 @@ public class FunctionObject
         int length = localSymbols.Length;
         MaxStackSize = length;
         sw.Start();
-        for (int address = 0; address != length; address++)
+        for (runtime.Address = 0; runtime.Address != length; runtime.Address++)
         {
             if (runtime.TaskWait)
             {
@@ -76,7 +76,7 @@ public class FunctionObject
                 }
                 runtime.TaskWait = false;
             }
-            localSymbols[address].Execute(runtime, ref address);
+            localSymbols[runtime.Address].Execute(runtime);
         }
         sw.Stop();
         Console.WriteLine($"Function {Name} executed in {sw.ElapsedMilliseconds}ms");
@@ -88,9 +88,9 @@ public class FunctionObject
         Symbol.Symbol[] localSymbols = _symbols;
         int length = localSymbols.Length;
         MaxStackSize = length;
-        for (int address = defaultAddress; address != length; address++)
+        for (runtime.Address = defaultAddress; runtime.Address != length; runtime.Address++)
         {
-            localSymbols[address].Execute(runtime, ref address);
+            localSymbols[runtime.Address].Execute(runtime);
         }
     }
 }
@@ -102,6 +102,7 @@ public class FunctionRuntime
     public FunctionObject Function;
     public bool TaskWait;
     public bool TaskWaitAll;
+    public int Address;
 
     public FunctionRuntime()
     {
@@ -114,13 +115,5 @@ public class FunctionRuntime
         Stack = new(runtime.Stack);
         Task = new();
         Function = runtime.Function;
-    }
-}
-
-public static class ThreadExtensions
-{
-    public static void WaitTicks(this Thread thread, int ticks)
-    {
-        Thread.SpinWait(ticks);
     }
 }

@@ -19,9 +19,9 @@ public class JumpIfNotEquals : Symbol
     public override string GetCommand() => "JUMP_IF_NOT_EQUALS";
         
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         if ((int)runtime.Stack.Peek() != (int)runtime.Stack.Peek(1))
-            address = _address;
+            runtime.Address = _address;
     }
 }

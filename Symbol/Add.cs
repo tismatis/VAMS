@@ -11,7 +11,7 @@ public class Add : Symbol
     public override string GetCommand() => "ADD";
         
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         if (runtime.Stack.Pop() is int a && runtime.Stack.Pop() is int b)
             runtime.Stack.Push(a + b);

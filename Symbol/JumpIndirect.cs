@@ -8,8 +8,8 @@ public class JumpIndirect : Symbol
 
     public override string GetCommand() => "JUMP_INDIRECT";
         
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
-        address = (int)runtime.Stack.Pop();
+        runtime.Address = (int)runtime.Stack.Pop();
     }
 }

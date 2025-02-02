@@ -4,5 +4,5 @@ public abstract class Symbol
 {
     public Symbol(string[] args) {}
     public abstract string GetCommand();
-    public abstract void Execute(FunctionRuntime runtime, ref int address);
+    public abstract void Execute(FunctionRuntime runtime);
 }

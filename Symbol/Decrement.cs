@@ -8,7 +8,7 @@ public class Decrement : Symbol
 
     public override string GetCommand() => "DECREMENT";
         
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         if (runtime.Stack.Pop() is int a)
         {

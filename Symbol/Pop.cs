@@ -8,7 +8,7 @@ public class Pop : Symbol
 
     public override string GetCommand() => "POP";
         
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         runtime.Stack.Pop();
     }

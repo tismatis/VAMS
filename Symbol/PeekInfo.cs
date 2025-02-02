@@ -8,7 +8,7 @@ public class PeekInfo : Symbol
 
     public override string GetCommand() => "PEEK_INFO";
 
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         var val = runtime.Stack.Peek();
         Console.WriteLine($"Peek value '{val}' of type {val.GetType()}");

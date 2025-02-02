@@ -33,7 +33,7 @@ public class InsertParse : Symbol
 
     public override string GetCommand() => "INSERT_PARSE";
         
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         runtime.Stack.Push(value);
     }

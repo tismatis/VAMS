@@ -8,7 +8,7 @@ public class Print : Symbol
 
     public override string GetCommand() => "PRINT";
         
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         Console.WriteLine(runtime.Stack.Peek());
     }

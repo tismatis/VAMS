@@ -21,7 +21,7 @@ public class Task : Symbol
     public override string GetCommand() => "TASK";
         
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         for(int i = 0; i!=_count; i++)
         {

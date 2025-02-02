@@ -16,8 +16,8 @@ public class Jump : Symbol
 
     public override string GetCommand() => "JUMP";
         
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
-        address = _address;
+        runtime.Address = _address;
     }
 }

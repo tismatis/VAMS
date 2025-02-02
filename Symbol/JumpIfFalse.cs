@@ -16,9 +16,9 @@ public class JumpIfFalse : Symbol
 
     public override string GetCommand() => "JUMP_IF_FALSE";
         
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         if (!(bool)runtime.Stack.Pop())
-            address = _address;
+            runtime.Address = _address;
     }
 }

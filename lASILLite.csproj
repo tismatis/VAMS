@@ -12,8 +12,8 @@
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
         <DebugType>none</DebugType>
         <DebugSymbols>false</DebugSymbols>
-        <!--<Optimize>true</Optimize>
-        <WholeProgramOptimization>true</WholeProgramOptimization>-->
+        <Optimize>true</Optimize>
+        <WholeProgramOptimization>true</WholeProgramOptimization>
     </PropertyGroup>
 
 </Project>

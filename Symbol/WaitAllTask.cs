@@ -11,7 +11,7 @@ public class WaitAllTask : Symbol
     public override string GetCommand() => "WAIT_ALL_TASK";
         
     [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         runtime.TaskWait = true;
         runtime.TaskWaitAll = true;

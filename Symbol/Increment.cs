@@ -11,7 +11,7 @@ public class Increment : Symbol
     public override string GetCommand() => "INCREMENT";
         
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         runtime.Stack.Push((int)runtime.Stack.Pop() + 1);
     }

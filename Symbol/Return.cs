@@ -12,8 +12,8 @@ public class Return : Symbol
 
     public override string GetCommand() => "RETURN";
 
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
-        address = runtime.Function.MaxStackSize-1;
+        runtime.Address = runtime.Function.MaxStackSize-1;
     }
 }

@@ -19,12 +19,12 @@ public class JumpIfEquals : Symbol
     public override string GetCommand() => "JUMP_IF_EQUALS";
         
     [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         if(runtime.Stack.Peek() is int a && runtime.Stack.Peek(1) is int b)
         {
             if(a == b)
-                address = _address;
+                runtime.Address = _address;
             return;
         }
         

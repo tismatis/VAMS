@@ -11,7 +11,7 @@ public class AddString : Symbol
     public override string GetCommand() => "ADD_STRING";
         
     [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         runtime.Stack.Push(runtime.Stack.Pop().ToString() + runtime.Stack.Pop().ToString());
     }

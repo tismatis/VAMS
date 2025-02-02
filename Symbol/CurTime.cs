@@ -11,7 +11,7 @@ public class CurTime : Symbol
     public override string GetCommand() => "CURTIME";
         
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         runtime.Stack.Push(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
     }

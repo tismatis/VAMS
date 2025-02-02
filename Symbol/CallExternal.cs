@@ -20,7 +20,7 @@ namespace ConsoleApp1.Symbol
 
         public override string GetCommand() => "CALL_EXTERNAL";
         
-        public override void Execute(FunctionRuntime runtime, ref int address)
+        public override void Execute(FunctionRuntime runtime)
         {
             Console.WriteLine("Executing external function " + Path + "." + Name);
 

@@ -8,7 +8,7 @@ public class Switch: Symbol
 
     public override string GetCommand() => "SWITCH";
         
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         var a = runtime.Stack.Pop();
         var b = runtime.Stack.Pop();

@@ -8,7 +8,7 @@ public class ToString : Symbol
 
     public override string GetCommand() => "TOSTRING";
         
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         runtime.Stack.Push(runtime.Stack.Pop().ToString());
     }

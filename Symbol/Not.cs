@@ -8,7 +8,7 @@ public class Not : Symbol
 
     public override string GetCommand() => "NOT";
 
-    public override void Execute(FunctionRuntime runtime, ref int address)
+    public override void Execute(FunctionRuntime runtime)
     {
         if(runtime.Stack.Pop() is bool b)
             runtime.Stack.Push(!b);
