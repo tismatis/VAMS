@@ -1,6 +1,6 @@
 ﻿/bin/
 /.idea/
-/obj/Release
-/obj/Debug
-/obj/x86
-/obj/x64
+/obj/Release/
+/obj/Debug/
+/obj/x86/
+/obj/x64/
