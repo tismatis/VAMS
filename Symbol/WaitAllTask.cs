@@ -1,0 +1,19 @@
+﻿using System.Runtime.CompilerServices;
+
+namespace ConsoleApp1.Symbol;
+
+public class WaitAllTask : Symbol
+{
+    public WaitAllTask() : base(null) {}
+
+    public WaitAllTask(string[] args) : base(args) {}
+
+    public override string GetCommand() => "WAIT_ALL_TASK";
+        
+    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
+    public override void Execute(FunctionRuntime runtime, ref int address)
+    {
+        runtime.TaskWait = true;
+        runtime.TaskWaitAll = true;
+    }
+}
