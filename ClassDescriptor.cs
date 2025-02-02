@@ -29,17 +29,10 @@ public class ClassDescriptor
         {
             if (f.Name == function)
             {
-                try
-                {
-                    if(f.IsAsync)
-                        f.ExecuteAsync(runtime, args);
-                    else
-                        f.Execute(runtime, args);
-                }
-                catch (Exception e)
-                {
-                    throw new Exception($"Error executing function {function} in class {Name}.", e);
-                }
+                if(f.IsAsync)
+                    f.ExecuteAsync(runtime, args);
+                else
+                    f.Execute(runtime, args);
                 return;
             }
         }
