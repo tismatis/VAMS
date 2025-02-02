@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ConsoleApp1.Symbol;
+﻿namespace ConsoleApp1.Symbol;
 
 public class Decrement : Symbol
 {

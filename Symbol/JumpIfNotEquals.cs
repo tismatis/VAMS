@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 namespace ConsoleApp1.Symbol;
 
@@ -22,15 +21,7 @@ public class JumpIfNotEquals : Symbol
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public override void Execute(FunctionRuntime runtime, ref int address)
     {
-        if(runtime.Stack.Peek() is int a && runtime.Stack.Peek(1) is int b)
-        {
-            if (a != b)
-            {
-                address = _address;
-                return;
-            }
-        }
-        else
-            throw new Exception("Cannot compare non-integer values.");
+        if ((int)runtime.Stack.Peek() != (int)runtime.Stack.Peek(1))
+            address = _address;
     }
 }

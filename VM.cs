@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
-namespace ConsoleApp1;
+﻿namespace ConsoleApp1;
 
 public class VM
 {
