@@ -12,11 +12,8 @@ namespace ConsoleApp1.Symbol
         {
             var a = runtime.Stack.Pop();
             var b = runtime.Stack.Pop();
-            if ((int)b == 0)
-            {
-                throw new DivideByZeroException("Cannot divide by zero.");
-            }
-            runtime.Stack.Push((double)a / (double)b);
+
+            runtime.Stack.Push(Convert.ToDouble(a) / Convert.ToDouble(b));
         }
     }
 }

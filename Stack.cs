@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Buffers;
+using System.Runtime.CompilerServices;
 
 namespace ConsoleApp1;
 
@@ -8,25 +9,22 @@ public class Stack<T>
     private T[] _array;
     private int _size;
     
-    private const int DefaultCapacity = 0;
+    private const int DefaultCapacity = 64;
 
     public Stack()
     {
-        _array = new T[20];
+        _array = ArrayPool<T>.Shared.Rent(DefaultCapacity);
     }
 
     public Stack(Stack<T> stack)
     {
-        _array = stack._array.ToArray();
-        _size = Int32.Parse(stack._size.ToString());
+        _array = ArrayPool<T>.Shared.Rent(stack._array.Length);
+        Array.Copy(stack._array, _array, stack._size);
+        _size = stack._size;
     }
     
-    [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-    public void Push(T item)
-    {
-        _array[_size] = item;
-        _size++;
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Push(T item) => _array[_size++] = item;
     
     [MethodImpl(MethodImplOptions.AggressiveOptimization)]
     public T Pop()
@@ -36,13 +34,10 @@ public class Stack<T>
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public T Peek() => Peek(0);
+    public T Peek() => _array[_size - 1];
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public T Peek(byte k)
-    {
-        return _array[_size - k - 1];
-    }
+    public T Peek(byte k) => _array[_size - k - 1];
     
     [MethodImpl(MethodImplOptions.NoInlining)]
     private void PushWithResize(T item)
