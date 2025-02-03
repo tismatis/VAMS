@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAMS", "VAMS\VAMS.csproj", "{45077C08-FA61-4FE8-976C-09B709ED36FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VAMSRunner", "VAMSRunner\VAMSRunner.csproj", "{EC607CE7-D1DB-4D5D-8D77-BE404DC25410}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45077C08-FA61-4FE8-976C-09B709ED36FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45077C08-FA61-4FE8-976C-09B709ED36FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45077C08-FA61-4FE8-976C-09B709ED36FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45077C08-FA61-4FE8-976C-09B709ED36FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC607CE7-D1DB-4D5D-8D77-BE404DC25410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC607CE7-D1DB-4D5D-8D77-BE404DC25410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC607CE7-D1DB-4D5D-8D77-BE404DC25410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC607CE7-D1DB-4D5D-8D77-BE404DC25410}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
