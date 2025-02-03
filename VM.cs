@@ -7,7 +7,7 @@ public class VM
 
     public VM(Dictionary<string, ClassDescriptor> classes)
     {
-        Classes = classes;
+        Classes = classes.ToDictionary();
         foreach (var @class in classes)
             @class.Value.Setup();
     }

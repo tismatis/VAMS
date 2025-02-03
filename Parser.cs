@@ -10,7 +10,7 @@ public enum ParserState
     Parsing
 }
 
-public class Parser
+public class Parser : IDisposable
 {
     public static ParserState Loading = ParserState.None;
     public Dictionary<string, Type> Symbols;
@@ -51,7 +51,9 @@ public class Parser
             tmpLines[i] = lines[i].ClearShittyChars();
 
         ClassDescriptor currentObj = null;
-        FunctionObject currentFunction = null;
+        List<Symbol.Symbol> listSymbols = new List<Symbol.Symbol>();
+        bool async = false;
+        string name = "";
 
         for (var idLine = 0; idLine < lines.Length; idLine++)
         {
@@ -67,25 +69,24 @@ public class Parser
                 {
                     if (currentObj == null)
                         throw new ParsingException("Cannot define an function inside nothing! (no class defined.)", idLine, line);
-                    if (parts[2] == "async")
-                    {
-                        currentFunction = new FunctionObject(parts[3], true);
-                    }
-                    else
-                        currentFunction = new FunctionObject(parts[2], false);
+                    listSymbols = new();
+                    async = parts[2] == "async";
+                    name = async ? parts[3] : parts[2];
                 }
                 else if (parts[1] == "method_end")
                 {
                     if (currentObj == null)
                         throw new ParsingException("Cannot define an function inside nothing! (no class defined.)", idLine, line);
-                    if (currentFunction == null)
+                    if (listSymbols == null)
                         throw new ParsingException("Cannot define an end of a function without defining a function!", idLine, line);
-                    currentObj.AddFunction(currentFunction);
-                    currentFunction = null;
+                    currentObj.AddFunction(new FunctionObject(name, async, listSymbols));
+                    listSymbols = null;
+                    async = false;
+                    name = "";
                 }
                 else if (parts[1] == "class_end")
                 {
-                    if(currentFunction != null)
+                    if(listSymbols != null)
                         throw new ParsingException("Function not closed!", idLine, line);
                     if (currentObj == null)
                         throw new ParsingException("Cannot define an function inside nothing! (no class defined.)", idLine, line);
@@ -102,7 +103,7 @@ public class Parser
                 if(String.IsNullOrWhiteSpace(parts[0]) || parts[0].StartsWith("#"))
                     continue;
                 
-                if (currentFunction == null)
+                if (listSymbols == null)
                     throw new ParsingException($"Cannot define a symbol outside of a function! (LINE: {idLine} - '{line}')" , idLine, line);
 
                 if (Symbols.ContainsKey(parts[0]))
@@ -118,7 +119,7 @@ public class Parser
                     if (symbol is not Symbol.Symbol)
                         throw new Exception("Symbol must implement the Symbol interface!");
 
-                    currentFunction.Symbols.Add((Symbol.Symbol)symbol);
+                    listSymbols.Add((Symbol.Symbol)symbol);
                 }
                 else
                 {
@@ -130,7 +131,7 @@ public class Parser
         if(currentObj != null)
             throw new ParsingException("Class not closed!", lines.Length, "");
         
-        if(currentFunction != null)
+        if(listSymbols != null)
             throw new ParsingException("Function not closed!", lines.Length, "");
         
         Loading = ParserState.None;
@@ -139,6 +140,12 @@ public class Parser
     public VM GenerateVM()
     {
         return new VM(Classes);
+    }
+
+    public void Dispose()
+    {
+        Symbols.Clear();
+        Classes.Clear();
     }
 }
 

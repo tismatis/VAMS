@@ -11,22 +11,28 @@ namespace ConsoleApp1
             Stopwatch stopwatch = new Stopwatch();
             
             stopwatch.Start();
-            Parser parser = new Parser();
-            stopwatch.Stop();
-            Console.WriteLine("Parsing time: " + stopwatch.ElapsedMilliseconds + "ms");
-            stopwatch.Reset();
             
-            stopwatch.Start();
-            parser.Parse("program.lasil");
-            stopwatch.Stop();
-            Console.WriteLine("Compiling time: " + stopwatch.ElapsedMilliseconds + "ms");
-            stopwatch.Reset();
+            VM vm;
             
-            stopwatch.Start();
-            VM vm = parser.GenerateVM();
-            stopwatch.Stop();
-            Console.WriteLine("Generating VM time: " + stopwatch.ElapsedMilliseconds + "ms");
-            stopwatch.Reset();
+            using (Parser parser = new Parser())
+            {
+                stopwatch.Stop();
+                Console.WriteLine("Parsing time: " + stopwatch.ElapsedMilliseconds + "ms");
+                stopwatch.Reset();
+            
+                stopwatch.Start();
+                parser.Parse("program.lasil");
+                stopwatch.Stop();
+                Console.WriteLine("Compiling time: " + stopwatch.ElapsedMilliseconds + "ms");
+                stopwatch.Reset();
+            
+                stopwatch.Start();
+                vm = parser.GenerateVM();
+                stopwatch.Stop();
+                Console.WriteLine("Generating VM time: " + stopwatch.ElapsedMilliseconds + "ms");
+                stopwatch.Reset();
+            }
+            
             
             stopwatch.Start();
             vm.Execute("Program", "Main");
