@@ -39,13 +39,14 @@ public class Parser : IDisposable
         
         Loading = ParserState.None;
     }
+
+    public void Parse(string path) => ParseRaw(File.ReadAllText(path));
     
-    public void Parse(string path)
+    public void ParseRaw(string content)
     {
         Loading = ParserState.Parsing;
         
-        var file = File.ReadAllText(path);
-        var lines = file.Split("\n"); // Fuck lambdas
+        var lines = content.Split("\n"); // Fuck lambdas
         var tmpLines = lines;
         for (var i = 0; i < lines.Length; i++)
             tmpLines[i] = lines[i].ClearShittyChars();
