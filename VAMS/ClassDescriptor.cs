@@ -1,11 +1,14 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
-namespace ConsoleApp1;
-
+namespace ConsoleApp1
+{
+    
 public class ClassDescriptor
 {
     public string Name;
-    private List<FunctionObject> _functions = new();
+    private List<FunctionObject> _functions = new List<FunctionObject>();
     
     public ClassDescriptor(string name)
     {
@@ -50,4 +53,5 @@ public class ClassDescriptor
 public class RuntimeException : Exception
 {
     public RuntimeException(string message, int address) : base($"An error occured in the VM during runtime at address {address}: {message}") {}
+}
 }

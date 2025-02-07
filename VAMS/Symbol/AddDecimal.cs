@@ -1,17 +1,18 @@
-﻿namespace ConsoleApp1.Symbol;
-
-public class AddDecimal : Symbol
+﻿namespace ConsoleApp1.Symbol
 {
-    public AddDecimal() : base(null) {}
-
-    public AddDecimal(string[] args) : base(args) {}
-
-    public override string GetCommand() => "ADD_DECIMAL";
-        
-    public override void Execute(FunctionRuntime runtime)
+    public class AddDecimal : Symbol
     {
-        var a = runtime.Stack.Pop();
-        var b = runtime.Stack.Pop();
-        runtime.Stack.Push((double)a + (double)b);
+        public AddDecimal() : base(null) {}
+
+        public AddDecimal(string[] args) : base(args) {}
+
+        public override string GetCommand() => "ADD_DECIMAL";
+        
+        public override void Execute(FunctionRuntime runtime)
+        {
+            var a = runtime.Stack.Pop();
+            var b = runtime.Stack.Pop();
+            runtime.Stack.Push((double)a + (double)b);
+        }
     }
 }

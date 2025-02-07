@@ -1,15 +1,16 @@
-﻿namespace ConsoleApp1.Symbol;
-
-public class ToString : Symbol
+﻿namespace ConsoleApp1.Symbol
 {
-    public ToString() : base(null) {}
-
-    public ToString(string[] args) : base(args) {}
-
-    public override string GetCommand() => "TOSTRING";
-        
-    public override void Execute(FunctionRuntime runtime)
+    public class ToString : Symbol
     {
-        runtime.Stack.Push(runtime.Stack.Pop().ToString());
+        public ToString() : base(null) {}
+
+        public ToString(string[] args) : base(args) {}
+
+        public override string GetCommand() => "TOSTRING";
+        
+        public override void Execute(FunctionRuntime runtime)
+        {
+            runtime.Stack.Push(runtime.Stack.Pop().ToString());
+        }
     }
 }

@@ -1,22 +1,25 @@
-﻿namespace ConsoleApp1.Symbol;
+﻿using System;
 
-public class Decrement : Symbol
+namespace ConsoleApp1.Symbol
 {
-    public Decrement() : base(null) {}
-
-    public Decrement(string[] args) : base(args) {}
-
-    public override string GetCommand() => "DECREMENT";
-        
-    public override void Execute(FunctionRuntime runtime)
+    public class Decrement : Symbol
     {
-        if (runtime.Stack.Pop() is int a)
+        public Decrement() : base(null) {}
+
+        public Decrement(string[] args) : base(args) {}
+
+        public override string GetCommand() => "DECREMENT";
+        
+        public override void Execute(FunctionRuntime runtime)
         {
-            runtime.Stack.Push(a - 1);
-        }
-        else
-        {
-            throw new NotImplementedException("DECREMENT NOT IMPLEMENTED FOR THIS");
+            if (runtime.Stack.Pop() is int a)
+            {
+                runtime.Stack.Push(a - 1);
+            }
+            else
+            {
+                throw new NotImplementedException("DECREMENT NOT IMPLEMENTED FOR THIS");
+            }
         }
     }
 }

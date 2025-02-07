@@ -1,5 +1,6 @@
-﻿namespace ConsoleApp1;
-
-public class ClassInstance
+﻿namespace ConsoleApp1
 {
+    public class ClassInstance
+    {
+    }
 }

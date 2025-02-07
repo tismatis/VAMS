@@ -1,16 +1,20 @@
-﻿namespace ConsoleApp1.Symbol;
+﻿using System;
 
-public class PeekInfo : Symbol
+namespace ConsoleApp1.Symbol
 {
-    public PeekInfo() : base(null) {}
-
-    public PeekInfo(string[] args) : base(args) {}
-
-    public override string GetCommand() => "PEEK_INFO";
-
-    public override void Execute(FunctionRuntime runtime)
+    public class PeekInfo : Symbol
     {
-        var val = runtime.Stack.Peek();
-        Console.WriteLine($"Peek value '{val}' of type {val.GetType()}");
+        public PeekInfo() : base(null) {}
+
+        public PeekInfo(string[] args) : base(args) {}
+
+        public override string GetCommand() => "PEEK_INFO";
+
+        public override void Execute(FunctionRuntime runtime)
+        {
+            var val = runtime.Stack.Peek();
+            Console.WriteLine($"Peek value '{val}' of type {val.GetType()}");
+        }
     }
+
 }

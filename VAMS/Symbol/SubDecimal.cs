@@ -1,17 +1,18 @@
-﻿namespace ConsoleApp1.Symbol;
-
-public class SubDecimal : Symbol
+﻿namespace ConsoleApp1.Symbol
 {
-    public SubDecimal() : base(null) {}
-
-    public SubDecimal(string[] args) : base(args) {}
-
-    public override string GetCommand() => "SUB_DECIMAL";
-        
-    public override void Execute(FunctionRuntime runtime)
+    public class SubDecimal : Symbol
     {
-        var a = runtime.Stack.Pop();
-        var b = runtime.Stack.Pop();
-        runtime.Stack.Push((double)a - (double)b);
+        public SubDecimal() : base(null) {}
+
+        public SubDecimal(string[] args) : base(args) {}
+
+        public override string GetCommand() => "SUB_DECIMAL";
+        
+        public override void Execute(FunctionRuntime runtime)
+        {
+            var a = runtime.Stack.Pop();
+            var b = runtime.Stack.Pop();
+            runtime.Stack.Push((double)a - (double)b);
+        }
     }
 }

@@ -1,41 +1,44 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using ConsoleApp1;
 
-namespace VAMSRunner;
-
-class Program
+namespace VAMSRunner
 {
-    static void Main(string[] args)
+    
+    class Program
     {
-        Stopwatch stopwatch = new Stopwatch();
-            
-        stopwatch.Start();
-            
-        VM vm;
-            
-        using (Parser parser = new Parser())
+        static void Main(string[] args)
         {
-            stopwatch.Stop();
-            Console.WriteLine("Parsing time: " + stopwatch.ElapsedMilliseconds + "ms");
-            stopwatch.Reset();
+            Stopwatch stopwatch = new Stopwatch();
             
             stopwatch.Start();
-            parser.Parse("program.lasil");
-            stopwatch.Stop();
-            Console.WriteLine("Compiling time: " + stopwatch.ElapsedMilliseconds + "ms");
-            stopwatch.Reset();
+            
+            VM vm;
+            
+            using (Parser parser = new Parser())
+            {
+                stopwatch.Stop();
+                Console.WriteLine("Parsing time: " + stopwatch.ElapsedMilliseconds + "ms");
+                stopwatch.Reset();
+            
+                stopwatch.Start();
+                parser.Parse("program.lasil");
+                stopwatch.Stop();
+                Console.WriteLine("Compiling time: " + stopwatch.ElapsedMilliseconds + "ms");
+                stopwatch.Reset();
+            
+                stopwatch.Start();
+                vm = parser.GenerateVM();
+                stopwatch.Stop();
+                Console.WriteLine("Generating VM time: " + stopwatch.ElapsedMilliseconds + "ms");
+                stopwatch.Reset();
+            }
+            
             
             stopwatch.Start();
-            vm = parser.GenerateVM();
+            vm.Execute("Program", "Main");
             stopwatch.Stop();
-            Console.WriteLine("Generating VM time: " + stopwatch.ElapsedMilliseconds + "ms");
-            stopwatch.Reset();
+            Console.WriteLine("Execution time: " + stopwatch.ElapsedMilliseconds + "ms");
         }
-            
-            
-        stopwatch.Start();
-        vm.Execute("Program", "Main");
-        stopwatch.Stop();
-        Console.WriteLine("Execution time: " + stopwatch.ElapsedMilliseconds + "ms");
     }
 }

@@ -1,18 +1,19 @@
-﻿namespace ConsoleApp1.Symbol;
-
-public class Switch: Symbol
+﻿namespace ConsoleApp1.Symbol
 {
-    public Switch() : base(null) {}
-
-    public Switch(string[] args) : base(args) {}
-
-    public override string GetCommand() => "SWITCH";
-        
-    public override void Execute(FunctionRuntime runtime)
+    public class Switch: Symbol
     {
-        var a = runtime.Stack.Pop();
-        var b = runtime.Stack.Pop();
-        runtime.Stack.Push(a);
-        runtime.Stack.Push(b);
+        public Switch() : base(null) {}
+
+        public Switch(string[] args) : base(args) {}
+
+        public override string GetCommand() => "SWITCH";
+        
+        public override void Execute(FunctionRuntime runtime)
+        {
+            var a = runtime.Stack.Pop();
+            var b = runtime.Stack.Pop();
+            runtime.Stack.Push(a);
+            runtime.Stack.Push(b);
+        }
     }
 }

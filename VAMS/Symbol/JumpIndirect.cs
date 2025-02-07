@@ -1,15 +1,16 @@
-﻿namespace ConsoleApp1.Symbol;
-
-public class JumpIndirect : Symbol
+﻿namespace ConsoleApp1.Symbol
 {
-    public JumpIndirect() : base(null) {}
-
-    public JumpIndirect(string[] args) : base(args) {}
-
-    public override string GetCommand() => "JUMP_INDIRECT";
-        
-    public override void Execute(FunctionRuntime runtime)
+    public class JumpIndirect : Symbol
     {
-        runtime.Address = (int)runtime.Stack.Pop();
+        public JumpIndirect() : base(null) {}
+
+        public JumpIndirect(string[] args) : base(args) {}
+
+        public override string GetCommand() => "JUMP_INDIRECT";
+        
+        public override void Execute(FunctionRuntime runtime)
+        {
+            runtime.Address = (int)runtime.Stack.Pop();
+        }
     }
 }

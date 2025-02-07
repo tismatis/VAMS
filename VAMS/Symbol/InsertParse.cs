@@ -1,40 +1,44 @@
-﻿namespace ConsoleApp1.Symbol;
+﻿using System;
 
-public class InsertParse : Symbol
+namespace ConsoleApp1.Symbol
 {
-    public object value;
     
-    public InsertParse() : base(null) {}
-
-    public InsertParse(string[] args) : base(args)
+    public class InsertParse : Symbol
     {
-        if (Parser.Loading == ParserState.Loading)
-            return;
+        public object value;
+    
+        public InsertParse() : base(null) {}
 
-        var type = Type.GetType(args[0]);
-        if (type == null)
-            throw new InvalidOperationException($"Type '{args[0]}' not found.");
-
-        switch (type.FullName)
+        public InsertParse(string[] args) : base(args)
         {
-            case "System.Single":
-                value = float.Parse(args[1]);
-                break;
-            case "System.Double":
-                value = double.Parse(args[1]);
-                break;
-            case "System.Decimal":
-                value = decimal.Parse(args[1]);
-                break;
-            default:
-                throw new NotImplementedException("Type not implemented.");
-        }
-    }
+            if (Parser.Loading == ParserState.Loading)
+                return;
 
-    public override string GetCommand() => "INSERT_PARSE";
+            var type = Type.GetType(args[0]);
+            if (type == null)
+                throw new InvalidOperationException($"Type '{args[0]}' not found.");
+
+            switch (type.FullName)
+            {
+                case "System.Single":
+                    value = float.Parse(args[1]);
+                    break;
+                case "System.Double":
+                    value = double.Parse(args[1]);
+                    break;
+                case "System.Decimal":
+                    value = decimal.Parse(args[1]);
+                    break;
+                default:
+                    throw new NotImplementedException("Type not implemented.");
+            }
+        }
+
+        public override string GetCommand() => "INSERT_PARSE";
         
-    public override void Execute(FunctionRuntime runtime)
-    {
-        runtime.Stack.Push(value);
+        public override void Execute(FunctionRuntime runtime)
+        {
+            runtime.Stack.Push(value);
+        }
     }
 }

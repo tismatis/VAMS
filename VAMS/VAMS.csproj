@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <TargetFramework>net462</TargetFramework>
+        <!--<ImplicitUsings>enable</ImplicitUsings>-->
+        <!--<Nullable>enable</Nullable>-->
         <Platforms>x64</Platforms>
     </PropertyGroup>
     
@@ -14,5 +14,13 @@
         <WholeProgramOptimization>true</WholeProgramOptimization>
         <ServerGarbageCollection>true</ServerGarbageCollection>
     </PropertyGroup>
+    
+    <ItemGroup>
+      <Folder Include="obj\" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Include="System.Collections.Immutable" Version="9.0.1" />
+    </ItemGroup>
 
 </Project>
