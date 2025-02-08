@@ -24,9 +24,9 @@ namespace ConsoleApp1
             throw new NotImplementedException("Cannot call instance functions yet.");
         }
     
-        public void Execute(string @class, string function, params object[] args)
+        public object Execute(string @class, string function, params object[] args)
         {
-            Classes[@class].Execute(this, function, args);
+            return Classes[@class].Execute(this, function, args);
         }
         
         public void Update()

@@ -26,17 +26,16 @@ public class ClassDescriptor
             f.Setup();
     }
     
-    public void Execute(FunctionRuntime runtime, string function, params object[] args)
+    public object Execute(FunctionRuntime runtime, string function, params object[] args)
     {
         foreach (FunctionObject f in _functions)
         {
             if (f.Name == function)
             {
                 if(f.IsAsync)
-                    f.ExecuteAsync(runtime, args);
+                    return f.ExecuteAsync(runtime, args);
                 else
-                    f.Execute(runtime, args);
-                return;
+                    return f.Execute(runtime, args);
             }
         }
         
@@ -44,9 +43,9 @@ public class ClassDescriptor
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Execute(VM vm, string function, params object[] args)
+    public object Execute(VM vm, string function, params object[] args)
     {
-        Execute(new FunctionRuntime(vm), function, args);
+        return Execute(new FunctionRuntime(vm), function, args);
     }
 }
 

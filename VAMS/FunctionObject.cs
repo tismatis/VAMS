@@ -13,11 +13,13 @@ namespace ConsoleApp1
         public ImmutableArray<Symbol.Symbol> Symbols = new ImmutableArray<Symbol.Symbol>();
         public int MaxStackSize;
         public bool IsAsync;
+        public bool ShouldReturn;
         
-        public FunctionObject(string name, bool isAsync, List<Symbol.Symbol> symbols)
+        public FunctionObject(string name, bool isAsync, bool shouldReturn, List<Symbol.Symbol> symbols)
         {
             Name = name;
             IsAsync = isAsync;
+            ShouldReturn = shouldReturn;
             Symbols = symbols.ToImmutableArray();
         }
 
@@ -27,7 +29,7 @@ namespace ConsoleApp1
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Execute(FunctionRuntime runtime, params object[] args)
+        public object Execute(FunctionRuntime runtime, params object[] args)
         {
             runtime.Function = this;
             Stopwatch sw = new Stopwatch();
@@ -38,10 +40,14 @@ namespace ConsoleApp1
                 Symbols[runtime.Address].Execute(runtime);
             sw.Stop();
             Console.WriteLine($"Function {Name} executed in {sw.ElapsedMilliseconds}ms");
+            
+            if(ShouldReturn)
+                return runtime.Stack.Pop();
+            return null;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ExecuteAsync(FunctionRuntime runtime, params object[] args)
+        public object ExecuteAsync(FunctionRuntime runtime, params object[] args)
         {
             runtime.Function = this;
             Stopwatch sw = new Stopwatch();
@@ -73,15 +79,24 @@ namespace ConsoleApp1
             }
             sw.Stop();
             Console.WriteLine($"Function {Name} executed in {sw.ElapsedMilliseconds}ms");
+            
+            if(ShouldReturn)
+                return runtime.Stack.Pop();
+            return null;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Execute(FunctionRuntime runtime, int defaultAddress, params object[] args)
+        public object Execute(FunctionRuntime runtime, int defaultAddress, params object[] args)
         {
             int length = Symbols.Length;
             MaxStackSize = length;
+            
             for (runtime.Address = defaultAddress; runtime.Address != length; runtime.Address++)
                 Symbols[runtime.Address].Execute(runtime);
+            
+            if(ShouldReturn)
+                return runtime.Stack.Pop();
+            return null;
         }
     }
 

@@ -58,6 +58,7 @@ namespace ConsoleApp1
             ClassDescriptor currentObj = null;
             List<Symbol.Symbol> listSymbols = new List<Symbol.Symbol>();
             bool async = false;
+            bool @return = false;
             string name = "";
 
             for (var idLine = 0; idLine < lines.Length; idLine++)
@@ -75,7 +76,9 @@ namespace ConsoleApp1
                         if (currentObj == null)
                             throw new ParsingException("Cannot define an function inside nothing! (no class defined.)", idLine, line);
                         listSymbols = new List<Symbol.Symbol>();
-                        async = parts[2] == "async";
+                        var listParams = parts[2].Split('+');
+                        async = listParams.Contains("async");
+                        @return = listParams.Contains("return");
                         name = async ? parts[3] : parts[2];
                     }
                     else if (parts[1] == "method_end")
@@ -84,9 +87,10 @@ namespace ConsoleApp1
                             throw new ParsingException("Cannot define an function inside nothing! (no class defined.)", idLine, line);
                         if (listSymbols == null)
                             throw new ParsingException("Cannot define an end of a function without defining a function!", idLine, line);
-                        currentObj.AddFunction(new FunctionObject(name, async, listSymbols));
+                        currentObj.AddFunction(new FunctionObject(name, async, @return, listSymbols));
                         listSymbols = null;
                         async = false;
+                        @return = false;
                         name = "";
                     }
                     else if (parts[1] == "class_end")
