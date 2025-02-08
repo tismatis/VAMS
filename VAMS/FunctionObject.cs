@@ -93,11 +93,13 @@ namespace ConsoleApp1
         public bool TaskWait;
         public bool TaskWaitAll;
         public int Address;
+        public VM Vm;
 
-        public FunctionRuntime()
+        public FunctionRuntime(VM vm)
         {
             Stack = new Stack<object>();
             Task = new List<Task>();
+            Vm = vm;
         }
 
         public FunctionRuntime(FunctionRuntime runtime)
@@ -105,6 +107,7 @@ namespace ConsoleApp1
             Stack = new Stack<object>(runtime.Stack);
             Task = new List<Task>();
             Function = runtime.Function;
+            Vm = runtime.Vm;
         }
     }
 }

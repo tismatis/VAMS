@@ -44,9 +44,9 @@ public class ClassDescriptor
     }
     
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void Execute(string function, params object[] args)
+    public void Execute(VM vm, string function, params object[] args)
     {
-        Execute(new FunctionRuntime(), function, args);
+        Execute(new FunctionRuntime(vm), function, args);
     }
 }
 

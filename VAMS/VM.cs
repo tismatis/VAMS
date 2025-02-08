@@ -8,6 +8,8 @@ namespace ConsoleApp1
     {
         public Dictionary<string, ClassDescriptor> Classes;
         public List<ClassInstance> Instances;
+        
+        public Queue<Action> MainThreadTasks = new Queue<Action>();
 
         public VM(Dictionary<string, ClassDescriptor> classes)
         {
@@ -24,7 +26,13 @@ namespace ConsoleApp1
     
         public void Execute(string @class, string function, params object[] args)
         {
-            Classes[@class].Execute(function, args);
+            Classes[@class].Execute(this, function, args);
+        }
+        
+        public void Update()
+        {
+            while (MainThreadTasks.Count > 0)
+                MainThreadTasks.Dequeue().Invoke();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace ConsoleApp1.Symbol
         
         public override void Execute(FunctionRuntime runtime)
         {
-            Console.WriteLine(runtime.Stack.Peek());
+            VAMSInterface.OnConsoleOutput(runtime.Stack.Peek());
         }
     }
 }

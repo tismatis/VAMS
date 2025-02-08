@@ -13,7 +13,7 @@ namespace ConsoleApp1.Symbol
         public override void Execute(FunctionRuntime runtime)
         {
             var val = runtime.Stack.Peek();
-            Console.WriteLine($"Peek value '{val}' of type {val.GetType()}");
+            VAMSInterface.OnConsoleOutput($"Peek value '{val}' of type {val.GetType()}");
         }
     }
 
