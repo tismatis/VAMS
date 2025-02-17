@@ -10,7 +10,7 @@ namespace ConsoleApp1
     public class FunctionObject
     {
         public string Name;
-        public ImmutableArray<Symbol.Symbol> Symbols = new ImmutableArray<Symbol.Symbol>();
+        public ImmutableArray<Symbol.Symbol> Symbols;
         public int MaxStackSize;
         public bool IsAsync;
         public bool ShouldReturn;

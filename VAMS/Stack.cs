@@ -47,6 +47,31 @@ namespace ConsoleApp1
             _array[_size] = item;
             _size++;
         }
+
+        /// <summary>
+        ///  Only use in COMPILER PLEASE
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Switch(int a, int b)
+        {
+            T temp = _array[a];
+            T temp2 = _array[b];
+            _array[a] = temp2;
+            _array[b] = temp;
+        }
+        
+        /// <summary>
+        ///  Only use in COMPILER PLEASE
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T[] ToArray()
+        {
+            T[] array = new T[_size];
+            Array.Copy(_array, array, _size);
+            return array;
+        }
         
         private void Grow(int capacity)
         {

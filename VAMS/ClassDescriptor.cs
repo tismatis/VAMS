@@ -8,11 +8,12 @@ namespace ConsoleApp1
 public class ClassDescriptor
 {
     public string Name;
-    private List<FunctionObject> _functions = new List<FunctionObject>();
+    private List<FunctionObject> _functions;
     
     public ClassDescriptor(string name)
     {
         Name = name;
+        _functions = new List<FunctionObject>();
     }
     
     public void AddFunction(FunctionObject function)
