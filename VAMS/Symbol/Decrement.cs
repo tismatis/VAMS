@@ -1,25 +1,43 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace ConsoleApp1.Symbol
 {
     public class Decrement : Symbol
     {
+        private readonly Action<FunctionRuntime> _execute;
+        
         public Decrement() : base(null) {}
 
-        public Decrement(string[] args) : base(args) {}
+        public Decrement(string[] args) : base(args)
+        {
+            if (Parser.Loading == ParserState.Loading)
+                return;
+
+            if (args.Length != 1)
+                throw new InvalidOperationException("DECREMENT REQUIRES EXACTLY 1 ARGUMENT");
+            
+            Type type;
+            try
+            {
+                type = Type.GetType(args[0]);
+            }
+            catch
+            {
+                throw new InvalidOperationException("DECREMENT REQUIRES A TYPE");
+            }
+            
+            if(type == typeof(int))
+                _execute = runtime => { runtime.Stack.Push((int)runtime.Stack.Pop() - 1); };
+            else if(type == typeof(float))
+                _execute = runtime => { runtime.Stack.Push((float)runtime.Stack.Pop() - 1); };
+            else
+                throw new InvalidOperationException("DECREMENT NOT IMPLEMENTED FOR THIS");
+        }
 
         public override string GetCommand() => "DECREMENT";
         
-        public override void Execute(FunctionRuntime runtime)
-        {
-            if (runtime.Stack.Pop() is int a)
-            {
-                runtime.Stack.Push(a - 1);
-            }
-            else
-            {
-                throw new NotImplementedException("DECREMENT NOT IMPLEMENTED FOR THIS");
-            }
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public override void Execute(FunctionRuntime runtime) => _execute.Invoke(runtime);
     }
 }
