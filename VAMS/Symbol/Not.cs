@@ -1,4 +1,6 @@
-﻿namespace ConsoleApp1.Symbol
+﻿using System.Runtime.CompilerServices;
+
+namespace ConsoleApp1.Symbol
 {
     public class Not : Symbol
     {
@@ -8,10 +10,10 @@
 
         public override string GetCommand() => "NOT";
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override void Execute(FunctionRuntime runtime)
         {
-            if(runtime.Stack.Pop() is bool b)
-                runtime.Stack.Push(!b);
+            runtime.Stack.Push(!(bool)runtime.Stack.Pop());
         }
     }
 
