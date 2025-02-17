@@ -27,8 +27,12 @@ namespace ConsoleApp1.Symbol
                 throw new InvalidOperationException("SUB REQUIRES A TYPE");
             }
             
-            if(type == typeof(int))
+            if(type == typeof(short))
+                _execute = runtime => { runtime.Stack.Push((short)runtime.Stack.Pop() - (short)runtime.Stack.Pop()); };
+            else if(type == typeof(int))
                 _execute = runtime => { runtime.Stack.Push((int)runtime.Stack.Pop() - (int)runtime.Stack.Pop()); };
+            else if(type == typeof(long))
+                _execute = runtime => { runtime.Stack.Push((long)runtime.Stack.Pop() - (long)runtime.Stack.Pop()); };
             else if(type == typeof(float))
                 _execute = runtime => { runtime.Stack.Push((float)runtime.Stack.Pop() - (float)runtime.Stack.Pop()); };
             else
