@@ -45,16 +45,16 @@ namespace ConsoleApp1.Symbol
                 _method = type.GetMethod(Name, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public, null, types.ToArray(), null);
             if (_method == null)
                 throw new InvalidOperationException($"Method '{Path}.{Name}' not found.");
+            
+            Execute = runtime =>
+            {
+                VAMSInterface.OnConsoleOutput("Executing external function " + Path + "." + Name);
+                var obj = _method.Invoke(null, new object[] { "Hello, World!" });
+                if (ShouldPush)
+                    runtime.Stack.Push(obj);
+            };
         }
 
         public override string GetCommand() => "CALL_EXTERNAL";
-        
-        public override void Execute(FunctionRuntime runtime)
-        {
-            VAMSInterface.OnConsoleOutput("Executing external function " + Path + "." + Name);
-            var obj = _method.Invoke(null, new object[]{"Hello, World!"});
-            if(ShouldPush)
-                runtime.Stack.Push(obj);
-        }
     }
 }

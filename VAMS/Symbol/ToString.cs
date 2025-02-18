@@ -4,13 +4,14 @@
     {
         public ToString() : base(null) {}
 
-        public ToString(string[] args) : base(args) {}
+        public ToString(string[] args) : base(args)
+        {
+            if (Parser.Loading == ParserState.Loading)
+                return;
+        
+            Execute = runtime => runtime.Stack.Push(runtime.Stack.Pop().ToString());
+        }
 
         public override string GetCommand() => "TOSTRING";
-        
-        public override void Execute(FunctionRuntime runtime)
-        {
-            runtime.Stack.Push(runtime.Stack.Pop().ToString());
-        }
     }
 }

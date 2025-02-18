@@ -19,13 +19,10 @@ namespace ConsoleApp1.Symbol
                 throw new InvalidOperationException($"Type '{args[0]}' not found.");
 
             value = Convert.ChangeType(args[1], type);
+            
+            Execute = runtime => runtime.Stack.Push(value);
         }
 
         public override string GetCommand() => "INSERT";
-        
-        public override void Execute(FunctionRuntime runtime)
-        {
-            runtime.Stack.Push(value);
-        }
     }
 }

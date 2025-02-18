@@ -4,13 +4,14 @@
     {
         public Pop() : base(null) {}
 
-        public Pop(string[] args) : base(args) {}
+        public Pop(string[] args) : base(args)
+        {
+            if (Parser.Loading == ParserState.Loading)
+                return;
+
+            Execute = runtime => runtime.Stack.Pop();
+        }
 
         public override string GetCommand() => "POP";
-        
-        public override void Execute(FunctionRuntime runtime)
-        {
-            runtime.Stack.Pop();
-        }
     }
 }

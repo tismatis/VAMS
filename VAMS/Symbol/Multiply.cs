@@ -5,8 +5,6 @@ namespace ConsoleApp1.Symbol
 {
     public class Multiply : Symbol
     {
-        private readonly Action<FunctionRuntime> _execute;
-        
         public Multiply() : base(null) {}
 
         public Multiply(string[] args) : base(args)
@@ -28,16 +26,13 @@ namespace ConsoleApp1.Symbol
             }
             
             if(type == typeof(int))
-                _execute = runtime => { runtime.Stack.Push((int)runtime.Stack.Pop() * 1); };
+                Execute = runtime => { runtime.Stack.Push((int)runtime.Stack.Pop() * 1); };
             else if(type == typeof(float))
-                _execute = runtime => { runtime.Stack.Push((float)runtime.Stack.Pop() * 1); };
+                Execute = runtime => { runtime.Stack.Push((float)runtime.Stack.Pop() * 1); };
             else
                 throw new InvalidOperationException("MUL NOT IMPLEMENTED FOR THIS");
         }
 
         public override string GetCommand() => "MUL";
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override void Execute(FunctionRuntime runtime) => _execute.Invoke(runtime);
     }
 }

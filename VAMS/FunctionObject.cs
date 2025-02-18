@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace ConsoleApp1
     public class FunctionObject
     {
         public string Name;
-        public ImmutableArray<Symbol.Symbol> Symbols;
+        public ImmutableArray<Action<FunctionRuntime>> Symbols;
         public int MaxStackSize;
         public bool IsAsync;
         public bool ShouldReturn;
@@ -20,7 +21,7 @@ namespace ConsoleApp1
             Name = name;
             IsAsync = isAsync;
             ShouldReturn = shouldReturn;
-            Symbols = symbols.ToImmutableArray();
+            Symbols = symbols.Select(s => s.Execute).ToImmutableArray();
         }
 
         public void Setup()
@@ -32,16 +33,11 @@ namespace ConsoleApp1
         public object Execute(FunctionRuntime runtime, params object[] args)
         {
             runtime.Function = this;
-            Stopwatch sw = new Stopwatch();
             int length = Symbols.Length;
             MaxStackSize = length;
-            sw.Start();
             for (runtime.Address = 0; runtime.Address != length; runtime.Address++)
-                Symbols[runtime.Address].Execute(runtime);
-            sw.Stop();
-            Console.WriteLine($"Function {Name} executed in {sw.ElapsedMilliseconds}ms");
-            
-            if(ShouldReturn)
+                Symbols[runtime.Address](runtime);
+            if (ShouldReturn)
                 return runtime.Stack.Pop();
             return null;
         }
@@ -75,7 +71,7 @@ namespace ConsoleApp1
                     runtime.TaskWaitAll = false;
                     runtime.TaskWait = false;
                 }
-                Symbols[runtime.Address].Execute(runtime);
+                Symbols[runtime.Address](runtime);
             }
             sw.Stop();
             Console.WriteLine($"Function {Name} executed in {sw.ElapsedMilliseconds}ms");
@@ -92,7 +88,7 @@ namespace ConsoleApp1
             MaxStackSize = length;
             
             for (runtime.Address = defaultAddress; runtime.Address != length; runtime.Address++)
-                Symbols[runtime.Address].Execute(runtime);
+                Symbols[runtime.Address](runtime);
             
             if(ShouldReturn)
                 return runtime.Stack.Pop();

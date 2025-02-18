@@ -5,8 +5,6 @@ namespace ConsoleApp1.Symbol
 {
     public class Power : Symbol
     {
-        private readonly Action<FunctionRuntime> _execute;
-
         public Power() : base(null) {}
 
         public Power(string[] args) : base(args)
@@ -28,16 +26,13 @@ namespace ConsoleApp1.Symbol
             }
             
             if(type == typeof(int))
-                _execute = runtime => { runtime.Stack.Push(Math.Pow((int)runtime.Stack.Pop(), (int)runtime.Stack.Pop())); };
+                Execute = runtime => { runtime.Stack.Push(Math.Pow((int)runtime.Stack.Pop(), (int)runtime.Stack.Pop())); };
             else if(type == typeof(float))
-                _execute = runtime => { runtime.Stack.Push(Math.Pow((float)runtime.Stack.Pop(), (float)runtime.Stack.Pop())); };
+                Execute = runtime => { runtime.Stack.Push(Math.Pow((float)runtime.Stack.Pop(), (float)runtime.Stack.Pop())); };
             else
                 throw new InvalidOperationException("POW NOT IMPLEMENTED FOR THIS");
         }
 
         public override string GetCommand() => "POW";
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override void Execute(FunctionRuntime runtime) => _execute.Invoke(runtime);
     }
 }

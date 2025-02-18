@@ -6,13 +6,14 @@ namespace ConsoleApp1.Symbol
     {
         public WaitTask() : base(null) {}
 
-        public WaitTask(string[] args) : base(args) {}
+        public WaitTask(string[] args) : base(args)
+        {
+            if (Parser.Loading == ParserState.Loading)
+                return;
+        
+            Execute = runtime => runtime.TaskWait = true;
+        }
 
         public override string GetCommand() => "WAIT_TASK";
-        
-        public override void Execute(FunctionRuntime runtime)
-        {
-            runtime.TaskWait = true;
-        }
     }
 }

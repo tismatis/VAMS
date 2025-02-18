@@ -11,15 +11,10 @@
             if (Parser.Loading == ParserState.Loading)
                 return;
         
-            _address = int.Parse(args[0]);
+            var address = int.Parse(args[0]);
+            Execute = runtime => {if((bool)runtime.Stack.Pop()) runtime.Address = address;};
         }
 
         public override string GetCommand() => "JUMP_IF_TRUE";
-        
-        public override void Execute(FunctionRuntime runtime)
-        {
-            if ((bool)runtime.Stack.Pop())
-                runtime.Address = _address;
-        }
     }
 }

@@ -1,18 +1,17 @@
-﻿using System;
-
-namespace ConsoleApp1.Symbol
+﻿namespace ConsoleApp1.Symbol
 {
     public class Print : Symbol
     {
         public Print() : base(null) {}
 
-        public Print(string[] args) : base(args) {}
+        public Print(string[] args) : base(args)
+        {
+            if (Parser.Loading == ParserState.Loading)
+                return;
+
+            Execute = runtime => VAMSInterface.OnConsoleOutput(runtime.Stack.Peek());
+        }
 
         public override string GetCommand() => "PRINT";
-        
-        public override void Execute(FunctionRuntime runtime)
-        {
-            VAMSInterface.OnConsoleOutput(runtime.Stack.Peek());
-        }
     }
 }

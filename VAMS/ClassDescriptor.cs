@@ -4,54 +4,52 @@ using System.Runtime.CompilerServices;
 
 namespace ConsoleApp1
 {
-    
-public class ClassDescriptor
-{
-    public string Name;
-    private List<FunctionObject> _functions;
-    
-    public ClassDescriptor(string name)
+    public class ClassDescriptor
     {
-        Name = name;
-        _functions = new List<FunctionObject>();
-    }
-    
-    public void AddFunction(FunctionObject function)
-    {
-        _functions.Add(function);
-    }
-    
-    public void Setup()
-    {
-        foreach (FunctionObject f in _functions)
-            f.Setup();
-    }
-    
-    public object Execute(FunctionRuntime runtime, string function, params object[] args)
-    {
-        foreach (FunctionObject f in _functions)
+        public string Name;
+        private List<FunctionObject> _functions;
+        
+        public ClassDescriptor(string name)
         {
-            if (f.Name == function)
-            {
-                if(f.IsAsync)
-                    return f.ExecuteAsync(runtime, args);
-                else
-                    return f.Execute(runtime, args);
-            }
+            Name = name;
+            _functions = new List<FunctionObject>();
         }
         
-        throw new Exception($"Function {function} not found in class {Name}.");
+        public void AddFunction(FunctionObject function)
+        {
+            _functions.Add(function);
+        }
+        
+        public void Setup()
+        {
+            foreach (FunctionObject f in _functions)
+                f.Setup();
+        }
+        
+        public object Execute(FunctionRuntime runtime, string function, params object[] args)
+        {
+            foreach (FunctionObject f in _functions)
+            {
+                if (f.Name == function)
+                {
+                    if(f.IsAsync)
+                        return f.ExecuteAsync(runtime, args);
+                    return f.Execute(runtime, args);
+                }
+            }
+            
+            throw new Exception($"Function {function} not found in class {Name}.");
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public object Execute(VM vm, string function, params object[] args)
+        {
+            return Execute(new FunctionRuntime(vm), function, args);
+        }
     }
-    
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public object Execute(VM vm, string function, params object[] args)
-    {
-        return Execute(new FunctionRuntime(vm), function, args);
-    }
-}
 
-public class RuntimeException : Exception
-{
-    public RuntimeException(string message, int address) : base($"An error occured in the VM during runtime at address {address}: {message}") {}
-}
+    public class RuntimeException : Exception
+    {
+        public RuntimeException(string message, int address) : base($"An error occured in the VM during runtime at address {address}: {message}") {}
+    }
 }

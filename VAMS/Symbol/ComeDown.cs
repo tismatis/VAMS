@@ -12,13 +12,10 @@
                 return;
 
             Index = byte.Parse(args[0]);
+            
+            Execute = runtime => runtime.Stack.Switch(Index, runtime.Stack.Count - 1);
         }
 
         public override string GetCommand() => "COME_DOWN";
-        
-        public override void Execute(FunctionRuntime runtime)
-        {
-            runtime.Stack.Switch(Index, runtime.Stack.Count - 1);
-        }
     }
 }

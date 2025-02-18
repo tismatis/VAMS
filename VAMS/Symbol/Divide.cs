@@ -5,8 +5,6 @@ namespace ConsoleApp1.Symbol
 {
     public class Divide : Symbol
     {
-        private readonly Action<FunctionRuntime> _execute;
-        
         public Divide() : base(null) {}
 
         public Divide(string[] args) : base(args)
@@ -28,16 +26,13 @@ namespace ConsoleApp1.Symbol
             }
             
             if(type == typeof(double))
-                _execute = runtime => { runtime.Stack.Push((double)runtime.Stack.Pop() / (double)runtime.Stack.Pop()); };
+                Execute = runtime => runtime.Stack.Push((double)runtime.Stack.Pop() / (double)runtime.Stack.Pop());
             else if(type == typeof(float))
-                _execute = runtime => { runtime.Stack.Push((float)runtime.Stack.Pop() / (float)runtime.Stack.Pop()); };
+                Execute = runtime => runtime.Stack.Push((float)runtime.Stack.Pop() / (float)runtime.Stack.Pop());
             else
                 throw new InvalidOperationException("DIV NOT IMPLEMENTED FOR THIS");
         }
 
         public override string GetCommand() => "DIV";
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override void Execute(FunctionRuntime runtime) => _execute.Invoke(runtime);
     }
 }

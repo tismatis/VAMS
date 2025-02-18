@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 
 namespace ConsoleApp1.Symbol
 {
     public class JumpIfEquals : Symbol
     {
-        private int _address;
-
         public JumpIfEquals() : base(null) {}
 
         public JumpIfEquals(string[] args) : base(args)
@@ -14,21 +11,25 @@ namespace ConsoleApp1.Symbol
             if (Parser.Loading == ParserState.Loading)
                 return;
         
-            _address = int.Parse(args[0]);
+            var address = int.Parse(args[0]);
+            Type type;
+            try
+            {
+                type = Type.GetType(args[1]);
+            }
+            catch
+            {
+                throw new InvalidOperationException("JUMP_IF_EQUALS REQUIRES A TYPE");
+            }
+            
+            if(type == typeof(int))
+                Execute = runtime => { if((int)runtime.Stack.Peek() == (int)runtime.Stack.Peek(1)) runtime.Address = address; };
+            else if(type == typeof(float))
+                Execute = runtime => { if((float)runtime.Stack.Peek() == (float)runtime.Stack.Peek(1)) runtime.Address = address; };
+            else
+                throw new InvalidOperationException("JUMP_IF_EQUALS NOT IMPLEMENTED FOR THIS");
         }
 
         public override string GetCommand() => "JUMP_IF_EQUALS";
-        
-        public override void Execute(FunctionRuntime runtime)
-        {
-            if(runtime.Stack.Peek() is int a && runtime.Stack.Peek(1) is int b)
-            {
-                if(a == b)
-                    runtime.Address = _address;
-                return;
-            }
-        
-            throw new Exception("Cannot compare non-integer values.");
-        }
     }
 }

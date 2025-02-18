@@ -32,13 +32,10 @@ namespace ConsoleApp1.Symbol
                 default:
                     throw new NotImplementedException("Type not implemented.");
             }
+            
+            Execute = runtime => runtime.Stack.Push(value);
         }
 
         public override string GetCommand() => "INSERT_PARSE";
-        
-        public override void Execute(FunctionRuntime runtime)
-        {
-            runtime.Stack.Push(value);
-        }
     }
 }

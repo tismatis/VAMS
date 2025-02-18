@@ -7,14 +7,14 @@ namespace ConsoleApp1.Symbol
     {
         public CurTime() : base(null) {}
 
-        public CurTime(string[] args) : base(args) {}
+        public CurTime(string[] args) : base(args)
+        {
+            if (Parser.Loading == ParserState.Loading)
+                return;
+
+            Execute = runtime => runtime.Stack.Push(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+        }
 
         public override string GetCommand() => "CURTIME";
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public override void Execute(FunctionRuntime runtime)
-        {
-            runtime.Stack.Push(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
-        }
     }
 }
