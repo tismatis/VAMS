@@ -296,30 +296,32 @@ namespace VAMSCSharpCompiler
 
         public override void VisitForStatement(ForStatementSyntax node)
         {
-            try
-            {
-                var address = GetAddress();
-                base.VisitForStatement(node);
-                // TODO: Get the item symbol and apply an type to it
+            var address = GetAddress();
+            var list = GetCurrentFunctionDescriptor().Symbols.ToList();
+            list.RemoveRange(0, address);
 
-                string identifierText = "";
-                if (node.Declaration != null)
-                    identifierText = node.Declaration.Variables[0].Identifier.Text;
-                else
-                    identifierText = ((AssignmentExpressionSyntax)node.Initializers[0]).Left.ToString();
+            base.VisitForStatement(node);
 
-                Console.WriteLine($"For: {identifierText}");
+            string identifierText = "";
+            if (node.Declaration != null)
+                identifierText = node.Declaration.Variables[0].Identifier.Text;
+            else
+                identifierText = ((AssignmentExpressionSyntax)node.Initializers[0]).Left.ToString();
                 
-                AddSymbol(new GenericSymbol("JUMP_IF_NOT_EQUALS",
-                    new List<string> { (address + 2).ToString(), _declaredVariables[identifierText] }));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                ShowStack();
-                throw;
-            }
+            list.AddRange(GetCurrentFunctionDescriptor().Symbols.ToList().GetRange(address, GetCurrentFunctionDescriptor().Symbols.Count - address));
+            
+            // Detect the end of the for "header"
+            // TODO: Detect the end of the for "header" in a better way using the type of the incremented value
+            var i = list.FirstOrDefault(x => x.Name == "INCREMENT" || x.Name == "DECREMENT");
+            var index = list.IndexOf(i);
+            
+            if(i == null)
+                throw new Exception("Increment/Decrement not found, they are the only supported solutions for now.");
+            
+            AddSymbol(new GenericSymbol("JUMP_IF_NOT_EQUALS",
+                new List<string> { (index+address).ToString(), _declaredVariables[identifierText] }));
         }
+
         public override void VisitAssignmentExpression(AssignmentExpressionSyntax node)
         {
             string wantedModified = node.Left.ToString();
