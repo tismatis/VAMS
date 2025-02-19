@@ -320,6 +320,14 @@ namespace VAMSCSharpCompiler
                 throw;
             }
         }
+        public override void VisitAssignmentExpression(AssignmentExpressionSyntax node)
+        {
+            string wantedModified = node.Left.ToString();
+            ApplyOrderNeeded(wantedModified);
+            base.VisitAssignmentExpression(node);
+            AddSymbol(new GenericSymbol("POP", new List<string>()));
+            AddSymbol(new GenericSymbol("INSERT", new List<string>{ _declaredVariables[wantedModified], node.Right.ToString() }), wantedModified);
+        }
 
         public override void Visit(SyntaxNode node)
         {
