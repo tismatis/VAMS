@@ -416,6 +416,7 @@ namespace VAMSCSharpCompiler
 
         public FunctionDescriptor GetCurrentFunctionDescriptor() => ClassDescriptors[ClassDescriptors.Count - 1].Functions[ClassDescriptors[ClassDescriptors.Count - 1].Functions.Count - 1];
         public int GetAddress() => GetCurrentFunctionDescriptor().Symbols.Count - 1;
+        public int GetAddress() => GetCurrentFunctionDescriptor().Symbols.Count;
     }
 
     static class TypeConverter
