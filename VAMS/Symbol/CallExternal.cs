@@ -46,10 +46,17 @@ namespace ConsoleApp1.Symbol
             if (_method == null)
                 throw new InvalidOperationException($"Method '{Path}.{Name}' not found.");
             
+            List<object> arguments = new List<object>();
+            int count = _method.GetParameters().Length;
+            
             Execute = runtime =>
             {
                 VAMSInterface.OnConsoleOutput("Executing external function " + Path + "." + Name);
-                var obj = _method.Invoke(null, new object[] { "Hello, World!" });
+                
+                for (int i = count; i > 0; i--)
+                    arguments.Add(runtime.Stack.Peek((byte)((byte)runtime.Stack.Count-i)));
+                
+                var obj = _method.Invoke(null, arguments.ToArray());
                 if (ShouldPush)
                     runtime.Stack.Push(obj);
             };
