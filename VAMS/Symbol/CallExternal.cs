@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using VAMS.Utilities;
 
 namespace VAMS.Symbol
 {
@@ -10,6 +11,7 @@ namespace VAMS.Symbol
         public string Name;
         private bool ShouldPush;
         private MethodInfo _method;
+        private bool _objectMethod;
 
         public CallExternal() : base(null) {}
 
@@ -25,24 +27,29 @@ namespace VAMS.Symbol
             string argsType = ""; // "Type1;Type2;Type3"
             if(args.Length > 3)
                 argsType = args[3];
+            if (args.Length > 4)
+                _objectMethod = bool.Parse(args[4]);
             
-            var type = Type.GetType(Path);
+            var type = Tools.SearchType(Path);
             if (type == null)
                 throw new InvalidOperationException($"Type '{Path}' not found.");
 
             List<Type> types = new List<Type>();
-            foreach (var typeArg in argsType.Split(';'))
+            if (argsType != "")
             {
-                var typeArgType = Type.GetType(typeArg);
-                if (typeArgType == null)
-                    throw new InvalidOperationException($"Type '{typeArg}' not found.");
-                types.Add(typeArgType);
+                foreach (var typeArg in argsType.Split(';'))
+                {
+                    var typeArgType = Tools.SearchType(typeArg);
+                    if (typeArgType == null)
+                        throw new InvalidOperationException($"Type '{typeArg}' not found.");
+                    types.Add(typeArgType);
+                }
             }
             
             if(String.IsNullOrEmpty(argsType))
-                _method = type.GetMethod(Name, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+                _method = type.GetMethod(Name, (_objectMethod ? BindingFlags.Instance : BindingFlags.Static) | BindingFlags.NonPublic | BindingFlags.Public);
             else
-                _method = type.GetMethod(Name, BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public, null, types.ToArray(), null);
+                _method = type.GetMethod(Name, (_objectMethod ? BindingFlags.Instance : BindingFlags.Static) | BindingFlags.NonPublic | BindingFlags.Public, null, types.ToArray(), null);
             if (_method == null)
                 throw new InvalidOperationException($"Method '{Path}.{Name}' not found.");
             
@@ -53,10 +60,10 @@ namespace VAMS.Symbol
             {
                 VAMSInterface.OnConsoleOutput("Executing external function " + Path + "." + Name);
                 
-                for (int i = count; i > 0; i--)
+                for (int i = count - (_objectMethod ? 1 : 0); i > 0; i--)
                     arguments.Add(runtime.Stack.Peek((byte)((byte)runtime.Stack.Count-i)));
                 
-                var obj = _method.Invoke(null, arguments.ToArray());
+                var obj = _method.Invoke(_objectMethod ? runtime.Stack.Peek() : null, arguments.ToArray());
                 if (ShouldPush)
                     runtime.Stack.Push(obj);
             };
