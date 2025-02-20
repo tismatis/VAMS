@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VAMS
+namespace VAMS.Utilities
 {
     public static class VAMSInterface
     {

@@ -1,4 +1,6 @@
-﻿namespace VAMS.Symbol
+﻿using VAMS.Utilities;
+
+namespace VAMS.Symbol
 {
     public class Print : Symbol
     {

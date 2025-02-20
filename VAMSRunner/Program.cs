@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using VAMS;
+using VAMS.Utilities;
 
 namespace VAMSRunner
 {
@@ -9,6 +10,8 @@ namespace VAMSRunner
     {
         static void Main(string[] args)
         {
+            VAMSInterface.ConsoleOutput += obj => Console.WriteLine(obj);
+            
             Stopwatch stopwatch = new Stopwatch();
             
             stopwatch.Start();
