@@ -15,7 +15,9 @@
 
             Path = args[0];
             Name = args[1];
-            NeedPush = bool.Parse(args[2]);
+            
+            if(args.Length > 2)
+                NeedPush = bool.Parse(args[2]);
 
             Execute = runtime =>
             {

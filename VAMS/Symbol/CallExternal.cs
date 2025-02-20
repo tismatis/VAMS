@@ -20,10 +20,10 @@ namespace VAMS.Symbol
 
             Path = args[0];
             Name = args[1];
-            if (args.Length > 1)
+            if (args.Length > 2)
                 ShouldPush = bool.Parse(args[2]);
             string argsType = ""; // "Type1;Type2;Type3"
-            if(args.Length > 2)
+            if(args.Length > 3)
                 argsType = args[3];
             
             var type = Type.GetType(Path);
