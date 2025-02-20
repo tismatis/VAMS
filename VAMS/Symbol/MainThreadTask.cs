@@ -23,7 +23,7 @@ namespace VAMS.Symbol
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message);
+                        VAMSInterface.OnConsoleOutput("Error: " + ex.Message);
                     }
                 });
             };

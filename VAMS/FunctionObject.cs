@@ -74,7 +74,7 @@ namespace VAMS
                 Symbols[runtime.Address](runtime);
             }
             sw.Stop();
-            Console.WriteLine($"Function {Name} executed in {sw.ElapsedMilliseconds}ms");
+            VAMSInterface.OnConsoleOutput($"Function {Name} executed in {sw.ElapsedMilliseconds}ms");
             
             if(ShouldReturn)
                 return runtime.Stack.Pop();
