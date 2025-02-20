@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp1.Symbol
+﻿namespace VAMS.Symbol
 {
     public class Pop : Symbol
     {

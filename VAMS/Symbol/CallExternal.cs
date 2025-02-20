@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace ConsoleApp1.Symbol
+namespace VAMS.Symbol
 {
     public class CallExternal : Symbol
     {

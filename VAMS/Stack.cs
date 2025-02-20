@@ -2,7 +2,7 @@
 using System.Buffers;
 using System.Runtime.CompilerServices;
 
-namespace ConsoleApp1
+namespace VAMS
 {
         
     [Serializable]

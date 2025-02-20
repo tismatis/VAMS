@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ConsoleApp1.Symbol
+namespace VAMS.Symbol
 {
     
     public class InsertParse : Symbol

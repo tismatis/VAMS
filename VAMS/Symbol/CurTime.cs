@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 
-namespace ConsoleApp1.Symbol
+namespace VAMS.Symbol
 {
     public class CurTime : Symbol
     {

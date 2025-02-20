@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using ConsoleApp1;
+using VAMS;
 
 namespace VAMSRunner
 {

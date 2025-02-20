@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace VAMS
 {
     public class FunctionObject
     {

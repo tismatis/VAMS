@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace ConsoleApp1
+namespace VAMS
 {
     public enum ParserState
     {
