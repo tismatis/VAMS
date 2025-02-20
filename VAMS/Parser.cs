@@ -29,7 +29,7 @@ namespace VAMS
             var types = Assembly.GetExecutingAssembly().GetTypes();
             foreach (var type in types)
             {
-                if (type.Namespace == "ConsoleApp1.Symbol" && !type.IsAbstract)
+                if (type.Namespace == "VAMS.Symbol" && !type.IsAbstract)
                 {
                     var instance = Activator.CreateInstance(type, new object[]{});
                     var method = type.GetMethod("GetCommand");
