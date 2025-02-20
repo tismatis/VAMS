@@ -22,7 +22,7 @@ namespace VAMSRunner
                 stopwatch.Reset();
             
                 stopwatch.Start();
-                parser.Parse("program.lasil");
+                parser.Parse("program.vams");
                 stopwatch.Stop();
                 Console.WriteLine("Compiling time: " + stopwatch.ElapsedMilliseconds + "ms");
                 stopwatch.Reset();

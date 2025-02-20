@@ -60,7 +60,7 @@ namespace VAMSCSharpCompiler
                     classContent += "\tdefine method_end\n";
                 }
                 classContent += "define class_end";
-                File.WriteAllText($"Compiled/{classDescriptor.Name}.lasil", classContent);
+                File.WriteAllText($"Compiled/{classDescriptor.Name}.vams", classContent);
             }
         }
     }
