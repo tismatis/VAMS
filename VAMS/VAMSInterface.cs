@@ -9,10 +9,5 @@ namespace VAMS
         {
             ConsoleOutput?.Invoke(obj);
         }
-        
-        public static void AutoSetupNet()
-        {
-            ConsoleOutput += Console.WriteLine;
-        }
     }
 }
